@@ -39,8 +39,6 @@ def calsb(imm7,imm5):  # calculates 12 bits of sb format imm[12:1]=imm[12]imm[11
     return imm12
 
 
-
-
 def decode(inst):
     if(opc(inst)==0x33):  # r format 
         print("instruction is of r format")
@@ -166,7 +164,6 @@ def decode(inst):
         imm12=imm_12(inst)
         return 'jalr',rs1,rd,imm12
 
-
     elif(opc(inst)==0x23):  # s format
         print("instruction is of s format")
         if(fun3(inst)==0x0):
@@ -193,7 +190,6 @@ def decode(inst):
             imm7=fun_7(inst) #imm[11:5] 7 bits
             imm12=cals(imm7,imm5)
             return 'sw',rs1,rs2,imm12
-
 
     elif(opc(inst)==0x63):  # sb format
         print("instruction is of sb format(branch)")
@@ -230,7 +226,6 @@ def decode(inst):
             imm12=calsb(imm7,imm5)
             return 'bge',rs1,rs2,imm12
 
-
     elif(opc(inst)==0x17):   # u format
         print("instruction is of u format")
         print("instruction is auipc")
@@ -244,7 +239,6 @@ def decode(inst):
         imm20=imm_20(inst) #imm[19:0] 20 bits
         return 'lui',rd,imm20
 
-
     elif(opc(inst)==0x6f):  # uj format
         print("instruction is of uj format")
         print("instruction is jal")
@@ -257,3 +251,5 @@ def decode(inst):
         imm19=(imm19<<11)|imm11 # imm[19:1] 19 bits
         imm20=(imm20<<19)|imm19 # imm[20:1] 20 bits
         return 'jal',rd,imm20
+    
+   
