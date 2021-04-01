@@ -2,7 +2,7 @@
 CS204 Project
 Five Step instructions :-
 Step1 : NemaRam
-Step2 : Aashish
+Step2 : Ashish
 Step3 : Vicky
 Step4 : Samir
 Step5 : Sahdev
