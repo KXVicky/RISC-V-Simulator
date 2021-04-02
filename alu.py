@@ -67,18 +67,26 @@ def alu(operation):
  		if RA == RB:
  			RZ = (PC - 4) + imme
  			#PC = RZ
+ 		else:
+ 			RZ = PC
  	elif operation == "bne":
  		if RA != RB:
  			RZ = (PC - 4) + imme
  			#PC = RZ
+ 		else:
+ 			RZ = PC
  	elif operation == "bge":
  		if RA >= RB:
  			RZ = (PC - 4) + imme
  			#PC = RZ
+ 		else:
+ 			RZ = PC
  	elif operation == "blt":
  		if RA < RB:
  			RZ = (PC - 4) + imme
  			#PC = RZ
+ 		else:
+ 			RZ = PC
  	elif operation == "auipc":
  		RZ = (PC - 4) + imme
  	elif operation == "jal":
@@ -107,3 +115,5 @@ def alu(operation):
  		RZ = RA + imme
  	elif operation == "lw":
  		RZ = RA + imme
+
+
