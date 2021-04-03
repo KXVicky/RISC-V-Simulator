@@ -1,4 +1,7 @@
 # code by ashish sulania
+# decode function returns 5 values (mnemonic,rs1,rs2,rd,immediate_value) to generalise things if instruction don't have any one such as rs1,rs2,rd,immediate_value then it returns -1 for each register 
+# and for immediate_value it returns  0xffffff(24 bits) number that is out of range of immediate field
+
 def opc(inst):    # returns opcode
     return (inst&0x7f)
 
@@ -22,6 +25,10 @@ def imm_12(inst): # returns imm12 of i format
 
 def imm_20(inst): # returns imm20 of u format
     return ((inst>>12)&0xfffff)
+
+def sign_extend(value, bits):  # compare sign extended number and returns appropriate integer
+    sign_bit = 1 << (bits - 1)
+    return (value & (sign_bit - 1)) - (value & sign_bit)
 
 def cals(a,b):    # calculates 12 bits of s format  imm[11:0]=imm[11:5]imm[4:0]
     a=a<<5
@@ -47,74 +54,73 @@ def decode(inst):
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'add',rs1,rs2,rd
+            return 'add',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x0 and fun_7(inst)==0x20):
             print("instruction is sub")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'sub',rs1,rs2,rd
+            return 'sub',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x7 and fun_7(inst)==0x00):
             print("instruction is and")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'and',rs1,rs2,rd
+            return 'and',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x6 and fun_7(inst)==0x00):
             print("instruction is or")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'or',rs1,rs2,rd
+            return 'or',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x1 and fun_7(inst)==0x00):
             print("instruction is sll")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'sll',rs1,rs2,rd    
+            return 'sll',rs1,rs2,rd,0xffffff  
         elif(fun3(inst)==0x2 and fun_7(inst)==0x00):
             print("instruction is slt")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'slt',rs1,rs2,rd
+            return 'slt',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x5 and fun_7(inst)==0x20):
             print("instruction is sra")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'sra',rs1,rs2,rd
+            return 'sra',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x5 and fun_7(inst)==0x00):
             print("instruction is srl")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'srl',rs1,rs2,rd
+            return 'srl',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x4 and fun_7(inst)==0x00):
             print("instruction is xor")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'xor',rs1,rs2,rd
+            return 'xor',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x0 and fun_7(inst)==0x01):
             print("instruction is mul")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'mul',rs1,rs2,rd
+            return 'mul',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x4 and fun_7(inst)==0x01):
             print("instruction is div")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'div',rs1,rs2,rd
+            return 'div',rs1,rs2,rd,0xffffff
         elif(fun3(inst)==0x6 and fun_7(inst)==0x01):
             print("instruction is rem")
             rs1=rs_1(inst)
             rs2=rs_2(inst)
             rd=r_d(inst)
-            return 'rem',rs1,rs2,rd
-
+            return 'rem',rs1,rs2,rd,0xffffff
 
     elif(opc(inst)==0x13):  # i format
         print("instruction is of i format(arithmetic)")
@@ -123,19 +129,19 @@ def decode(inst):
             rs1=rs_1(inst)
             rd=r_d(inst)
             imm12=imm_12(inst)
-            return 'addi',rs1,rd,imm12
+            return 'addi',rs1,-1,rd,sign_extend(imm12,12)
         elif(fun3(inst)==0x7):
             print("instruction is andi")
             rs1=rs_1(inst)
             rd=r_d(inst)
             imm12=imm_12(inst)
-            return 'andi',rs1,rd,imm12
+            return 'andi',rs1,-1,rd,sign_extend(imm12,12)
         elif(fun3(inst)==0x6):
             print("instruction is ori")
             rs1=rs_1(inst)
             rd=r_d(inst)
             imm12=imm_12(inst)
-            return 'ori',rs1,rd,imm12
+            return 'ori',rs1,-1,rd,sign_extend(imm12,12)
     elif(opc(inst)==0x03):
         print("instruction is of i format(load)")
         if(fun3(inst)==0x0):
@@ -143,26 +149,26 @@ def decode(inst):
             rs1=rs_1(inst)
             rd=r_d(inst)
             imm12=imm_12(inst)
-            return 'lb',rs1,rd,imm12
+            return 'lb',rs1,-1,rd,sign_extend(imm12,12)
         elif(fun3(inst)==0x1):
             print("instruction is lh")
             rs1=rs_1(inst)
             rd=r_d(inst)
             imm12=imm_12(inst)
-            return 'lh',rs1,rd,imm12
+            return 'lh',rs1,-1,rd,sign_extend(imm12,12)
         elif(fun3(inst)==0x2):
             print("instruction is lw")
             rs1=rs_1(inst)
             rd=r_d(inst)
             imm12=imm_12(inst)
-            return 'lw',rs1,rd,imm12
+            return 'lw',rs1,-1,rd,sign_extend(imm12,12)
     elif(opc(inst)==0x67 and fun3(inst)==0x0):
         print("instruction is of i format")
         print("instruction is jalr")
         rs1=rs_1(inst)
         rd=r_d(inst)
         imm12=imm_12(inst)
-        return 'jalr',rs1,rd,imm12
+        return 'jalr',rs1,-1,rd,sign_extend(imm12,12)
 
     elif(opc(inst)==0x23):  # s format
         print("instruction is of s format")
@@ -173,7 +179,7 @@ def decode(inst):
             imm5=r_d(inst) # imm[4:0] 5 bits
             imm7=fun_7(inst) #imm[11:5] 7 bits
             imm12=cals(imm7,imm5)
-            return 'sb',rs1,rs2,imm12
+            return 'sb',rs1,rs2,-1,sign_extend(imm12,12)
         elif(fun3(inst)==0x1):
             print("instruction is sh")
             rs1=rs_1(inst)
@@ -181,7 +187,7 @@ def decode(inst):
             imm5=r_d(inst) # imm[4:0] 5 bits
             imm7=fun_7(inst) #imm[11:5] 7 bits
             imm12=cals(imm7,imm5)
-            return 'sh',rs1,rs2,imm12
+            return 'sh',rs1,rs2,-1,sign_extend(imm12,12)
         elif(fun3(inst)==0x2):
             print("instruction is sw")
             rs1=rs_1(inst)
@@ -189,7 +195,7 @@ def decode(inst):
             imm5=r_d(inst) # imm[4:0] 5 bits
             imm7=fun_7(inst) #imm[11:5] 7 bits
             imm12=cals(imm7,imm5)
-            return 'sw',rs1,rs2,imm12
+            return 'sw',rs1,rs2,-1,sign_extend(imm12,12)
 
     elif(opc(inst)==0x63):  # sb format
         print("instruction is of sb format(branch)")
@@ -200,7 +206,7 @@ def decode(inst):
             imm5=r_d(inst) # imm[4:1]imm[11] 5 bits
             imm7=fun_7(inst) #imm[12]imm[10:5] 7 bits
             imm12=calsb(imm7,imm5)
-            return 'beq',rs1,rs2,imm12
+            return 'beq',rs1,rs2,-1,sign_extend(imm12,12)
         elif(fun3(inst)==0x1):
             print("instruction is bne")
             rs1=rs_1(inst)
@@ -208,7 +214,7 @@ def decode(inst):
             imm5=r_d(inst) # imm[4:1]imm[11] 5 bits
             imm7=fun_7(inst) #imm[12]imm[10:5] 7 bits
             imm12=calsb(imm7,imm5)
-            return 'bne',rs1,rs2,imm12
+            return 'bne',rs1,rs2,-1,sign_extend(imm12,12)
         elif(fun3(inst)==0x4):
             print("instruction is blt")
             rs1=rs_1(inst)
@@ -216,7 +222,7 @@ def decode(inst):
             imm5=r_d(inst) # imm[4:1]imm[11] 5 bits
             imm7=fun_7(inst) #imm[12]imm[10:5] 7 bits
             imm12=calsb(imm7,imm5)
-            return 'blt',rs1,rs2,imm12
+            return 'blt',rs1,rs2,-1,sign_extend(imm12,12)
         elif(fun3(inst)==0x5):
             print("instruction is bge")
             rs1=rs_1(inst)
@@ -224,20 +230,20 @@ def decode(inst):
             imm5=r_d(inst) # imm[4:1]imm[11] 5 bits
             imm7=fun_7(inst) #imm[12]imm[10:5] 7 bits
             imm12=calsb(imm7,imm5)
-            return 'bge',rs1,rs2,imm12
+            return 'bge',rs1,rs2,-1,sign_extend(imm12,12)
 
     elif(opc(inst)==0x17):   # u format
         print("instruction is of u format")
         print("instruction is auipc")
         rd=r_d(inst)
         imm20=imm_20(inst) #imm[31:12] 20 bits
-        return 'auipc',rd,imm20
+        return 'auipc',-1,-1,rd,sign_extend(imm20,20)
     elif(opc(inst)==0x37):
         print("instruction is of u format")
         print("instruction is lui")
         rd=r_d(inst)
         imm20=imm_20(inst) #imm[19:0] 20 bits
-        return 'lui',rd,imm20
+        return 'lui',-1,-1,rd,sign_extend(imm20,20)
 
     elif(opc(inst)==0x6f):  # uj format
         print("instruction is of uj format")
@@ -250,6 +256,4 @@ def decode(inst):
         imm11=(imm11<<10)|imm10 # imm[11:1] 11 bits
         imm19=(imm19<<11)|imm11 # imm[19:1] 19 bits
         imm20=(imm20<<19)|imm19 # imm[20:1] 20 bits
-        return 'jal',rd,imm20
-    
-   
+        return 'jal',-1,-1,rd,sign_extend(imm20,20)
