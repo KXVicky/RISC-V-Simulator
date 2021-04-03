@@ -257,3 +257,6 @@ def decode(inst):
         imm19=(imm19<<11)|imm11 # imm[19:1] 19 bits
         imm20=(imm20<<19)|imm19 # imm[20:1] 20 bits
         return 'jal',-1,-1,rd,sign_extend(imm20,20)
+    
+    
+    
