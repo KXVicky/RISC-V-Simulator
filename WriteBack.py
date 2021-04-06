@@ -1,6 +1,5 @@
-rd = 0x0
 
-Control = 1
+
         ########## Assumptions ###########
 # rd : global variable ; detected in decode stage
 # RY is output of stage 4.
@@ -16,5 +15,3 @@ def WriteBack(RY):
     if (Control==1):
         register[rd] = RY
 
-WriteBack(0x00000008)
-print(register)
