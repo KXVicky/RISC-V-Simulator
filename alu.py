@@ -65,38 +65,38 @@ def alu(operation):
 			RZ = 0
 	elif operation == "beq":
 		if RA == RB:
-			RZ = (PC - 4) + imme
-			PC = RZ
+			RZ = (pc - 4) + imme
+			#pc = RZ update pc in writeback
 		else:
-			RZ = PC
+			RZ = pc
 	elif operation == "bne":
 		if RA != RB:
-			RZ = (PC - 4) + imme
-			PC = RZ
+			RZ = (pc - 4) + imme
+			#pc = RZ update pc in writeback
 		else:
-			RZ = PC
+			RZ = pc
 	elif operation == "bge":
 		if RA >= RB:
-			RZ = (PC - 4) + imme
-			PC = RZ
+			RZ = (pc - 4) + imme
+			#pc = RZ
 		else:
-			RZ = PC
+			RZ = pc
 	elif operation == "blt":
 		if RA < RB:
-			RZ = (PC - 4) + imme
-			PC = RZ
+			RZ = (pc - 4) + imme
+			#pc = RZ update pc in writeback
 		else:
-			RZ = PC
+			RZ = pc
 	elif operation == "auipc":
-		RZ = (PC - 4) + imme
+		RZ = (pc - 4) + imme
 	elif operation == "jal":
-		RZ = (PC - 4) + imme
-		PC_temp = PC
-		PC = RZ
+		RZ = (pc - 4) + imme
+		#pc_temp = pc
+		#pc = RZ
 	elif operation == "jalr":
 		RZ = RA + imme
-		PC_temp = PC
-		PC = RZ
+		#pc_temp = pc
+		#pc = RZ
 	elif operation == "lui":
 		RZ = RA + imme
 	elif operation == "sb":
