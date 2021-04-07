@@ -115,5 +115,6 @@ def alu(operation):
 		RZ = RA + imme
 	elif operation == "lw":
 		RZ = RA + imme
+	return RZ
 
 
