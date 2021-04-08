@@ -97,7 +97,7 @@ def decode(inst):
     print("decode:")
     if(opc(inst)==0x33):  # r format 
         print("instruction is of r format")
-	control=1
+        control=1
         if(fun3(inst)==0x0 and fun_7(inst)==0x00):
             rs1=rs_1(inst)
             rs2=rs_2(inst)
@@ -205,7 +205,7 @@ def decode(inst):
 
     elif(opc(inst)==0x13):  # i format
         print("instruction is of i format(arithmetic)")
-	control=1
+        control=1
         if(fun3(inst)==0x0):
             rs1=rs_1(inst)
             rd=r_d(inst)
@@ -235,7 +235,7 @@ def decode(inst):
             return "ori"
     elif(opc(inst)==0x03):
         print("instruction is of i format(load)")
-	control=1
+        control=1
         if(fun3(inst)==0x0):
             rs1=rs_1(inst)
             rd=r_d(inst)
@@ -265,7 +265,7 @@ def decode(inst):
             return "lw"
     elif(opc(inst)==0x67 and fun3(inst)==0x0):
         print("instruction is of i format")
-	control=1
+        control=1
         rs1=rs_1(inst)
         rd=r_d(inst)
         imm12=imm_12(inst)
@@ -277,7 +277,7 @@ def decode(inst):
 
     elif(opc(inst)==0x23):  # s format
         print("instruction is of s format")
-	control=0
+        control=0
         if(fun3(inst)==0x0):
             rs1=rs_1(inst)
             rs2=rs_2(inst)
@@ -317,7 +317,7 @@ def decode(inst):
 
     elif(opc(inst)==0x63):  # sb format
         print("instruction is of sb format(branch)")
-	control=0
+        control=0
         if(fun3(inst)==0x0):
             rs1=rs_1(inst)
             rs2=rs_2(inst)
@@ -369,7 +369,7 @@ def decode(inst):
 
     elif(opc(inst)==0x17):   # u format
         print("instruction is of u format")
-	control=1
+        control=1
         rd=r_d(inst)
         imm20=imm_20(inst) #imm[31:12] 20 bits
         imme=sign_extend(imm20,20)
@@ -385,7 +385,7 @@ def decode(inst):
 
     elif(opc(inst)==0x6f):  # uj format
         print("instruction is of uj format")
-	control=1
+        control=1
         rd=r_d(inst)
         imm19=(inst>>12)&0xff   # imm[19:12] 8 bits
         imm11=(inst>>20)&0x1    # imm[11] 1 bit
