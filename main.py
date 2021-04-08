@@ -23,6 +23,7 @@ register = [] # global list
 for i in range(32):
     register.append(0)
 
+register[2] = 0x7FFFFFF0 	#Stack Pointer
 def Fetch(lines):
     global pc
     
@@ -397,7 +398,8 @@ def decode(inst):
         imme=sign_extend(imm20,20)
         print("jal rd:",rd,"imm[20:1]:",imme)
         return "jal"
-        
+
+#Code by Vicky Kumar Xaxa
 #Assuming MuxB, RA, RB, IR, RZ, PC, PC_temp, imme are global variables.
 #decode fills MuxB, RA, RB, imme
 #MuxB = 0 for value from RB to ALU. MuxB = 1 for imme to ALU
