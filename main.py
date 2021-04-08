@@ -519,13 +519,13 @@ def alu(operation):
 		print("RZ = target address : ", RZ)
 		
 	elif operation == "jal":
-		RZ = (pc - 4) + imme
+		RZ = (pc - 4) + imme*2
 		pc_temp = pc
 		pc = RZ
 		print("RZ = target address : ", RZ)
 		
 	elif operation == "jalr":
-		RZ = RA + imme
+		RZ = RA + imme*2
 		pc_temp = pc
 		pc = RZ
 		print("RZ = target address : ", RZ)
