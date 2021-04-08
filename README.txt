@@ -16,7 +16,7 @@ Work Distribution
 1. 2019CSB1101 Nema Ram Meghwal => Step 1 (Fetch) : Functions -> Fetch()
 2. 2019CSB1115 Sahdev           => Step 5 (WriteBack) : Functions -> WriteBack(), register[]
 3. 2019CSB1043 Ashish Sulania   => Step 2 (Decode) : Functions -> decode()
-4. 2019CSB1117 Samir P Salim    => Step 4 (Memory) : Functions -> access_memory(), initialize()
+4. 2019CSB1117 Samir P Salim    => Step 4 (Memory) : Functions -> access_memory(), initialize(),print_mem(),memory[]
 5. 2019CSB1131 Vicky Kumar Xaxa => Step 3 (ALU) : Functions -> alu()
 
 
@@ -51,3 +51,7 @@ The simulator also prints messages for each stage for each instruction, for exam
         ◦ ALU
         ◦ OPERATION Preforming :  add 
         ◦ RZ = sum : 0
+    • Memory prints:
+        ◦ Stored memory in the following format :
+        ◦ 0x10000000 0x00101526
+        ...
