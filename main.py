@@ -93,11 +93,10 @@ def calsb(imm7,imm5):  # calculates 12 bits of sb format imm[12:1]=imm[12]imm[11
 
 
 def decode(inst):
-    global RA,RB,imme,rd,control
+    global RA,RB,imme,rd
     print("decode:")
     if(opc(inst)==0x33):  # r format 
         print("instruction is of r format")
-	control = 1
         if(fun3(inst)==0x0 and fun_7(inst)==0x00):
             rs1=rs_1(inst)
             rs2=rs_2(inst)
@@ -205,7 +204,6 @@ def decode(inst):
 
     elif(opc(inst)==0x13):  # i format
         print("instruction is of i format(arithmetic)")
-	control = 1
         if(fun3(inst)==0x0):
             rs1=rs_1(inst)
             rd=r_d(inst)
@@ -235,7 +233,6 @@ def decode(inst):
             return "ori"
     elif(opc(inst)==0x03):
         print("instruction is of i format(load)")
-	control = 1
         if(fun3(inst)==0x0):
             rs1=rs_1(inst)
             rd=r_d(inst)
@@ -265,7 +262,6 @@ def decode(inst):
             return "lw"
     elif(opc(inst)==0x67 and fun3(inst)==0x0):
         print("instruction is of i format")
-	control = 1
         rs1=rs_1(inst)
         rd=r_d(inst)
         imm12=imm_12(inst)
@@ -277,7 +273,6 @@ def decode(inst):
 
     elif(opc(inst)==0x23):  # s format
         print("instruction is of s format")
-	control = 0
         if(fun3(inst)==0x0):
             rs1=rs_1(inst)
             rs2=rs_2(inst)
@@ -317,7 +312,6 @@ def decode(inst):
 
     elif(opc(inst)==0x63):  # sb format
         print("instruction is of sb format(branch)")
-	control = 0
         if(fun3(inst)==0x0):
             rs1=rs_1(inst)
             rs2=rs_2(inst)
@@ -369,7 +363,6 @@ def decode(inst):
 
     elif(opc(inst)==0x17):   # u format
         print("instruction is of u format")
-	control = 1
         rd=r_d(inst)
         imm20=imm_20(inst) #imm[31:12] 20 bits
         imme=sign_extend(imm20,20)
@@ -377,7 +370,6 @@ def decode(inst):
         return "auipc"
     elif(opc(inst)==0x37):
         print("instruction is of u format")
-	control = 1
         rd=r_d(inst)
         imm20=imm_20(inst) #imm[19:0] 20 bits
         imme=sign_extend(imm20,20)
@@ -386,7 +378,6 @@ def decode(inst):
 
     elif(opc(inst)==0x6f):  # uj format
         print("instruction is of uj format")
-	control = 1
         rd=r_d(inst)
         imm19=(inst>>12)&0xff   # imm[19:12] 8 bits
         imm11=(inst>>20)&0x1    # imm[11] 1 bit
@@ -413,97 +404,158 @@ def decode(inst):
 #Output of alu will be in register(global variable) RZ
 
 def alu(operation):
-	global RZ
+	global RZ, pc, pc_temp
 	
+	print("ALU")
 	print("OPERATION Preforming : ", operation)
 	
 	if operation == "add":
 		RZ = RA + RB
+		print("RZ = sum : ", RZ)
+		
 	elif operation == "addi":
 		RZ = RA + imme
+		print("RZ = sum : ", RZ)
+		
 	elif operation == "sub":
 		RZ = RA - RB
+		print("RZ = diff : ", RZ)
+		
 	elif operation == "mul":
 		RZ = RA * RB
+		print("RZ = product : ", RZ)
+		
 	elif operation == "div":
 		RZ = int(RA / RB)
+		print("RZ = quotient : ", RZ)
+		
 	elif operation == "rem":
 		RZ = RA % RB
+		print("RZ = remainder : ", RZ)
+		
 	elif operation == "xor":
 		RZ = RA ^ RB
+		print("RZ = xor : ", RZ)
+		
 	elif operation == "and":
 		RZ = RA & RB
+		print("RZ = and : ", RZ)
+		
 	elif operation == "andi":
 		RZ = RA & imme
+		print("RZ = and : ", RZ)
+		
 	elif operation == "or":
 		RZ = RA | RB
+		print("RZ = or : ", RZ)
+		
 	elif operation == "ori":
 		RZ = RA | imme
+		print("RZ = or : ", RZ)
+		
 	elif operation == "sll":
 		RZ = BitArray(int = RA, length = 32) << RB		#Restricting size to 32 bits
 		RZ = RZ.int 	#Converting back to int
+		print("RZ = lshift L : ", RZ)
+		
 	elif operation == "srl":
 		RZ = BitArray(int = RA, length = 32) >> RB
 		RZ = RZ.int
+		print("RZ = rshift L : ", RZ)
+		
 	elif operation == "sra":
 		RZ = RA >> RB
+		print("RZ = rshift A : ", RZ)
+		
 	elif operation == "slt":
 		if RA < RB:
 			RZ = 1
 		else:
 			RZ = 0
+		print("RZ = slt : ", RZ)
+		
 	elif operation == "beq":
 		if RA == RB:
-			RZ = (pc - 4) + imme
-			#pc = RZ update pc in writeback
+			RZ = (pc - 4) + imme*2
+			pc = RZ
 		else:
 			RZ = pc
+		print("RZ = Target address : ", RZ)
+		
 	elif operation == "bne":
 		if RA != RB:
-			RZ = (pc - 4) + imme
-			#pc = RZ update pc in writeback
+			RZ = (pc - 4) + imme*2
+			pc = RZ
 		else:
 			RZ = pc
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "bge":
 		if RA >= RB:
-			RZ = (pc - 4) + imme
-			#pc = RZ
+			RZ = (pc - 4) + imme*2
+			pc = RZ
 		else:
 			RZ = pc
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "blt":
 		if RA < RB:
-			RZ = (pc - 4) + imme
-			#pc = RZ update pc in writeback
+			RZ = (pc - 4) + imme*2
+			pc = RZ
 		else:
 			RZ = pc
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "auipc":
 		RZ = (pc - 4) + imme
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "jal":
 		RZ = (pc - 4) + imme
-		#pc_temp = pc
-		#pc = RZ
+		pc_temp = pc
+		pc = RZ
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "jalr":
 		RZ = RA + imme
-		#pc_temp = pc
-		#pc = RZ
+		pc_temp = pc
+		pc = RZ
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "lui":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "sb":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "sw":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "sd":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "sh":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "lb":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "ld":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
+		
 	elif operation == "lh":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
 	elif operation == "lw":
 		RZ = RA + imme
+		print("RZ = target address : ", RZ)
 
 
 
@@ -536,10 +588,10 @@ def main():
 			Control = 1
 		
 		alu(operation)
-		print (RZ)
 		WriteBack()
 		IR = Fetch(lines)
 		clock = clock + 1
+		print()
 		
 	print("CLOCK : ", clock)
 	file.close()
