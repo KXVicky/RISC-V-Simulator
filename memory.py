@@ -151,6 +151,8 @@ def initialize(cap, memory): #function to initialize memory in the form of an ar
     return cap
 
 def access_memory(operation):
+    global cap
+    global memory
     if(operation=="lb"):
         marker=RZ-0x10000000
         if(marker<=cap):
