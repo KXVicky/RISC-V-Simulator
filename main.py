@@ -734,7 +734,7 @@ def main():
 		IR = int(IR, 16)
 		operation = decode(IR)
 		Control = 0
-		if operation in ['add', 'and', 'or', 'sll', 'slt', 'sra', 'srl', 'sub', 'xor', 'mul', 'div', 'rem', 'addi', 'andi', 'ori', 'lb', 'ld', 'lh', 'lw']:
+		if operation in ['add', 'and', 'or', 'sll', 'slt', 'sra', 'srl', 'sub', 'xor', 'mul', 'div', 'rem', 'addi', 'andi', 'ori', 'lb', 'ld', 'lh', 'lw', 'lui', 'auipc']:
 			Control = 1
 		
 		alu(operation)
