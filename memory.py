@@ -3,8 +3,6 @@ Code By Samir P Salim
 Assumptions:
 cap, memory[],registers[],operation,RZ are global variables.
 """
-cap=-1
-memory=[]
 
 def eight_digit(a): #converting a less than 8 digit hexadecimal number to a 8 digit hexadecimal number
     if(len(a)<10):
@@ -119,7 +117,7 @@ def convert(a,b): #function to convert a two digit hexadecimal number 0x<a><b> t
     return ans
 
 def initialize(cap, memory): #function to initialize memory in the form of an array which store two digit hexadecimal numbers
-    file1=open("simple_add.mc","r")
+    file1=open("instruction.mc","r")
     lines1=file1.readlines()
     array = []
     for i in lines1:
