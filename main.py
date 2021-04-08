@@ -515,7 +515,7 @@ def alu(operation):
 		print("RZ = target address : ", RZ)
 		
 	elif operation == "auipc":
-		RZ = (pc - 4) + imme
+		RZ = (pc - 4) + (imme << 12)
 		print("RZ = target address : ", RZ)
 		
 	elif operation == "jal":
@@ -531,8 +531,9 @@ def alu(operation):
 		print("RZ = target address : ", RZ)
 		
 	elif operation == "lui":
-		RZ = RA + imme
-		print("RZ = target address : ", RZ)
+		RZ = BitArray(int = imme, length = 32) << 12
+		RZ = RZ.int
+		print("RZ = integer : ", RZ)
 		
 	elif operation == "sb":
 		RZ = RA + imme
