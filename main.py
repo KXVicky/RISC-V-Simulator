@@ -6,7 +6,7 @@
 #local variable MCode
 #function Fetch  
 #store instruction in IR
-
+from bitstring import BitArray
 
 IR = ''
 pc = 0x0
@@ -413,7 +413,7 @@ def decode(inst):
 #RD
 #RY
 
-from bitstring import BitArray
+
 
 def alu(operation):
 	global RZ
