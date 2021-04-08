@@ -327,7 +327,7 @@ def decode(inst):
             RA=register[rs1]
             RB=register[rs2]
             imme=sign_extend(imm12,12)
-            print("beq rs1:",rs1,"rs2:",rs2,"imm:",imme)
+            print("beq rs1:",rs1,"rs2:",rs2,"imm[12:1]:",imme)
             print("values [rs1]:",RA,"[rs2]:",RB)
             return "beq"
         elif(fun3(inst)==0x1):
@@ -339,7 +339,7 @@ def decode(inst):
             RA=register[rs1]
             RB=register[rs2]
             imme=sign_extend(imm12,12)
-            print("bne rs1:",rs1,"rs2:",rs2,"imm:",imme)
+            print("bne rs1:",rs1,"rs2:",rs2,"imm[12:1]:",imme)
             print("values [rs1]:",RA,"[rs2]:",RB)
             return "bne"
         elif(fun3(inst)==0x4):
@@ -351,7 +351,7 @@ def decode(inst):
             RA=register[rs1]
             RB=register[rs2]
             imme=sign_extend(imm12,12)
-            print("blt rs1:",rs1,"rs2:",rs2,"imm:",imme)
+            print("blt rs1:",rs1,"rs2:",rs2,"imm[12:1]:",imme)
             print("values [rs1]:",RA,"[rs2]:",RB)
             return "blt"
         elif(fun3(inst)==0x5):
@@ -363,7 +363,7 @@ def decode(inst):
             RA=register[rs1]
             RB=register[rs2]
             imme=sign_extend(imm12,12)
-            print("bge rs1:",rs1,"rs2:",rs2,"imm:",imme)
+            print("bge rs1:",rs1,"rs2:",rs2,"imm[12:1]:",imme)
             print("values [rs1]:",RA,"[rs2]:",RB)
             return "bge"
 
@@ -395,7 +395,7 @@ def decode(inst):
         imm19=(imm19<<11)|imm11 # imm[19:1] 19 bits
         imm20=(imm20<<19)|imm19 # imm[20:1] 20 bits
         imme=sign_extend(imm20,20)
-        print("jal rd:",rd,"imm:",imme)
+        print("jal rd:",rd,"imm[20:1]:",imme)
         return "jal"
         
 #Assuming MuxB, RA, RB, IR, RZ, PC, PC_temp, imme are global variables.
