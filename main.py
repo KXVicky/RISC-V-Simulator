@@ -525,7 +525,7 @@ def alu(operation):
 		print("RZ = target address : ", RZ)
 		
 	elif operation == "jalr":
-		RZ = RA + imme*2
+		RZ = RA + imme
 		pc_temp = pc
 		pc = RZ
 		print("RZ = target address : ", RZ)
