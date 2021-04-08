@@ -44,9 +44,9 @@ The simulator also prints messages for each stage for each instruction, for exam
         ◦ INSTRUCTION : 0x003202B3
     • Decode prints:
         ◦ decode:
-        ◦ instruction is of r format(load)
+        ◦ instruction is of r format
         ◦ add rs1: 4 rs2: 3 rd: 5
-        ◦ values [rs1]: 0 [rs2]:0   “(values that you stores initially in registers 4 and 5 here I am assuming as 0 and 0) “
+        ◦ values [rs1]: 0 [rs2]:0   “(values that you stores initially in registers 4(rs1) and 5(rs2) here I am assuming as 0 and 0) “
     • Execute prints:
         ◦ ALU
         ◦ OPERATION Preforming :  add 
