@@ -603,19 +603,19 @@ def print_mem(memory,cap): #function to print all components of memory
             b=hex(memory[i+1])
             c=hex(memory[i+2])
             d=hex(memory[i+3])
-            print(hex(i)+" 0x"+a[2:]+b[2:]+c[2:]+d[2:])
+            print(hex(i+0x10000000)+" 0x"+a[2:]+b[2:]+c[2:]+d[2:])
         elif(cap-i>=2):
            a=hex(memory[i])
            b=hex(memory[i+1])
            c=hex(memory[i+2]) 
-           print(hex(i)+" 0x00"+a[2:]+b[2:]+c[2:])
+           print(hex(i+0x10000000)+" 0x00"+a[2:]+b[2:]+c[2:])
         elif(cap-i>=1):
            a=hex(memory[i])
            b=hex(memory[i+1])
-           print(hex(i)+" 0x0000"+a[2:]+b[2:])
+           print(hex(i+0x10000000)+" 0x0000"+a[2:]+b[2:])
         elif(cap-i>=0):
            a=hex(memory[i])
-           print(hex(i)+" 0x000000"+a[2:])
+           print(hex(i+0x10000000)+" 0x000000"+a[2:])
         i+=4
     
 
@@ -868,6 +868,7 @@ def main():
 		
 		alu(operation)
 		access_memory(operation)
+		print_mem(memory,cap)
 		WriteBack()
 		IR = Fetch(lines)
 		clock = clock + 1
