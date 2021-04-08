@@ -11,12 +11,14 @@ from bitstring import BitArray
 IR = ''
 pc = 0x0
 pc_temp = 0x0
+rd = 0x0
 RA = 0x0
 RB = 0x0
 RZ = 0x0
 RY = 0x0
 imme = 0x0
 clock = 0
+Control = 0
 register = [] # global list 
 for i in range(32):
     register.append(0)
@@ -401,20 +403,6 @@ def decode(inst):
 
 #Output of alu will be in register(global variable) RZ
 
-#Global variables (Same as diagram)
-#RA
-#RB
-#RZ
-#PC
-#PC_temp
-#MuxB
-#imme
-#IR
-#RD
-#RY
-
-
-
 def alu(operation):
 	global RZ
 	
@@ -519,13 +507,14 @@ def alu(operation):
 # control will become 1 for r-type, i-type, u-type, uj-type
 
 
-def WriteBack(RY):
-    if (Control==1):
-        register[rd] = RY
+def WriteBack():	
+	if(Control==1):
+		RY = RZ
+		register[rd] = RY
 
 
 def main():
-	global clock
+	global clock, Control
 	file = open("instruction.mc","r")
 	lines =file.readlines()
 	IR = Fetch(lines)
@@ -533,8 +522,13 @@ def main():
 		print ("INSTRUCTION : ", IR)
 		IR = int(IR, 16)
 		operation = decode(IR)
+		Control = 0
+		if operation in ['add', 'and', 'or', 'sll', 'slt', 'sra', 'srl', 'sub', 'xor', 'mul', 'div', 'rem', 'addi', 'andi', 'ori', 'lb', 'ld', 'lh', 'lw']:
+			Control = 1
+		
 		alu(operation)
 		print (RZ)
+		WriteBack()
 		IR = Fetch(lines)
 		clock = clock + 1
 		
