@@ -263,3 +263,4 @@ def access_memory(operation):
                 memory.append(0)
                 cap+=1
             memory.append(RB%256)
+    return RY
