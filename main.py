@@ -684,7 +684,7 @@ def access_memory(operation):
         if(memory[marker]>-1 and memory[marker]<128):
             return memory[marker]
         elif(memory[marker]>127):
-            return (memor# -*- coding: utf-8 -*-y[marker]+0xffffff00)%4294967296
+            return (memory[marker]+0xffffff00)%4294967296
         else:
             return (memory[marker]+1+0xffffffff)%4294967296
     elif(operation=="lh"):
