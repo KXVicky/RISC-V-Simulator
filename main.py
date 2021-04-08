@@ -643,7 +643,7 @@ def convert(a,b):
     return ans
 
 def initialize():
-    file1=open("simple_add.mc","r")
+    file1=open("instruction.mc","r")
     lines1=file1.readlines()
     array = []
     for i in lines1:
