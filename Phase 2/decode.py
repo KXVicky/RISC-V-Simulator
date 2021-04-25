@@ -844,38 +844,3 @@ def pipelinedecode(inst):
 
 
 
-
-if __name__=="__main__":
-    multiClock=0;instcount=0
-    register = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
-    c=1
-    datadependence=[0,0,0]
-    #inst=0xff9ff0ef
-    #(mn,rs1,rs2,rd,imm)=decode(inst)
-    #print(mn,"rs1:",rs1,"rs2:",rs2,"rd:",rd,"imm:",imm)
-    insts=[0x003202B3,
-0xF9C20293,
-0x00531333,
-0x00428383,
-0x00829403,
-0xFFC2A483,
-0x00728223,
-0x00829423,
-0xFE92AE23,
-0x0000C517,
-0x0000A5B7,
-0xFE1FF0EF,
-0xFC000EE3,
-0xFFC48567
-]
-
-for inst in insts:
-    #print(" ",count,str(decode(inst)))
-    pipelinedecode(inst)
-    #print("RA:",RA,"RB:",RB,"rd",rd,"imme:",imme)
-    #count=count+1
-    print(datadependence)
-    print(instcount)
-print(multiClock)
-#print("ashis i:",0xffffff)
-#print(register)
