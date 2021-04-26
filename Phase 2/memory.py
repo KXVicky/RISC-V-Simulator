@@ -1,3 +1,4 @@
+#Code by Samir P Salim
 # Assume rd global variable
 # TextMemory, and Datamemory are global
 # RZ is global, output of ALU
