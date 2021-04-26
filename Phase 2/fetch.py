@@ -1,5 +1,7 @@
 
-
+# code modifier Sahdev & Nemaram
+# here Pc, IR, clock are gloabl variable.
+# Function - Fetch for pipeline
 
 file = open("instruction.mc","r")
 lines =file.readlines()
