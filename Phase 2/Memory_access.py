@@ -12,12 +12,11 @@ DataMemory = dict.fromkeys(range(0x0FFFFFE8, 0x10000178, 4), 0)
 
 
 
-StoreInst = ["beq", "bne", "bge", "blt", "auipc", "jal", "jalr", "lui", "sb", "sw", "sh", "sd", "lb", "lw", "ld", "lh"]
+#StoreInst = ["beq", "bne", "bge", "blt", "auipc", "jal", "jalr", "lui", "sb", "sw", "sh", "sd", "lb", "lw", "ld", "lh"]
+
 def Memory_access(operation, lines):
-    global TextMemory, DataMemory
+    global DataMemory
     array = []
-    if operation in StoreInst:
-        TextMemory[rd] = RZ
     if (lines):
         for i in range(len(lines)):
             if lines[i]!='\n':
