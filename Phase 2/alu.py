@@ -224,8 +224,8 @@ def alu(operation):
 #Alu Data forwarding registers -> aludfRZ
 #Memory data forwarding register -> memdfRZ
 
-def pipelineAlu():
-	global RZ, pc, pc_temp, operation, aluRZ, aludfRZ, multiClock
+def pipelineAlu(operation):
+	global RZ, pc, pc_temp, aluRZ, aludfRZ, multiClock
 	
 	#Mem to ALU data forwarding
 	if dataDependence[0] == 'H1':
