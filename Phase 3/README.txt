@@ -117,7 +117,7 @@ How to execute
 --------------
 ./RISC-V-Simulator-main/python3 main.py
 
-all input and output is same as phase 2 but few changes are there to prints no. of accesses ,hits and misses.
+all input and output are same as phase 2 but few changes are there to prints no. of accesses ,hits and misses.
   output for  hit and misses
   
 Instruction cache:
