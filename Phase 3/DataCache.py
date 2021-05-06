@@ -46,8 +46,8 @@ def Data_cache(address):        # Address will come from ALU
 #  I will compare the address with this dictionaries indexes
 #  If they will match then the data of that will be stored in the cache
 #  .
-TextMemory = dict.fromkeys(range(0, 0x00000194, 4), 0)
-DataMemory = dict.fromkeys(range(0x0FFFFFE8, 0x10000178, 4), 0)
+TextMemory = dict.fromkeys(range(0, 0x00000194, 1), 0)
+DataMemory = dict.fromkeys(range(0x10000000, 0x10000194, 1), 0)
 
 #  .
 
